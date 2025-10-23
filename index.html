@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GrowLeaf — Officer Panel</title>
+<title>GrowLeaf — Yetki Paneli</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#ff9a3c;--bg2:#ff6a00;--accent:#fff;--card-bg: rgba(255,255,255,0.08);}
@@ -31,48 +31,48 @@ textarea{resize:none;height:80px;}
 <body>
 <div class="brand">🍃 GrowLeaf</div>
 
-<!-- Language Selector -->
+<!-- Dil Seçimi -->
 <select id="langSelector">
-  <option value="en" selected>English</option>
   <option value="tr">Türkçe</option>
+  <option value="en">English</option>
   <option value="id">Indonesia</option>
 </select>
 
 <div class="card" id="mainCard">
-  <h1 id="mainTitle">Start Becoming an Officer Now</h1>
-  <button id="startBtn">Start</button>
+  <h1 id="mainTitle">Şimdi Yetkili Olmaya Başla</h1>
+  <button id="startBtn">Başla</button>
 </div>
 
-<button id="adminLoginBtn">Admin Login</button>
+<button id="adminLoginBtn">Admin Girişi</button>
 
 <!-- Form Modal -->
 <div class="modal-backdrop" id="formModal">
   <div class="modal">
-    <h2 id="formTitle">Officer Request</h2>
-    <input type="text" id="discordName" placeholder="Username / Discord Name">
-    <p class="infoText" id="infoText">You will become an officer at GrowLeaf. We will take you as a trial. Your role will increase over time, so loyalty is important. As a trial, you will manage tickets at first, later you will get a role in-game, and eventually become head officer and manage others.</p>
-    <button class="btn" id="submitRequest">Submit</button>
-    <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Close</button>
+    <h2 id="formTitle">Yetki Talebi</h2>
+    <input type="text" id="discordName" placeholder="Kullanıcı Adı / Discord Adı">
+    <p class="infoText" id="infoText">GrowLeaf’te yetkili olacaksınız. Sizi deneme olarak alacağız. İlerleyen zamanlarda rolünüz yükselecektir, bu yüzden sadık olmanız önemlidir. Deneme olarak alındığınızda ticket bakacaksınız ilk başta, sonradan oyun içinde rol alacaksınız ve en sonda baş yetkili olacaksınız ve diğerlerini yöneteceksiniz.</p>
+    <button class="btn" id="submitRequest">Onayla</button>
+    <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
   </div>
 </div>
 
 <!-- Admin Login Modal -->
 <div class="modal-backdrop" id="adminModal">
   <div class="modal">
-    <h2>Admin Login</h2>
-    <input type="text" id="adminUser" placeholder="Username">
-    <input type="password" id="adminPass" placeholder="Password">
-    <button class="btn" id="adminLogin">Login</button>
-    <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Close</button>
+    <h2>Admin Girişi</h2>
+    <input type="text" id="adminUser" placeholder="Kullanıcı Adı">
+    <input type="password" id="adminPass" placeholder="Şifre">
+    <button class="btn" id="adminLogin">Giriş</button>
+    <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
   </div>
 </div>
 
 <!-- Admin Panel -->
 <div class="card" id="adminPanel" style="display:none;">
-  <h1>Admin Panel</h1>
-  <button class="toggle-btn" id="toggleRequests">Close Requests</button>
+  <h1>Admin Paneli</h1>
+  <button class="toggle-btn" id="toggleRequests">Talep Gönderimini Kapat</button>
   <div class="admin-panel">
-    <h3>Requests:</h3>
+    <h3>Talepler:</h3>
     <ul id="requestList"></ul>
   </div>
 </div>
@@ -108,17 +108,6 @@ const infoText = document.getElementById('infoText');
 
 // Language Texts
 const texts = {
-  en: {
-    mainTitle: "Start Becoming an Officer Now",
-    startBtn: "Start",
-    formTitle: "Officer Request",
-    submitBtn: "Submit",
-    closeBtn: "Close",
-    adminLogin: "Admin Login",
-    requestClosed: "Request submission is currently closed.",
-    alertSent: "Your request has been sent!",
-    infoText: "You will become an officer at GrowLeaf. We will take you as a trial. Your role will increase over time, so loyalty is important. As a trial, you will manage tickets at first, later you will get a role in-game, and eventually become head officer and manage others."
-  },
   tr: {
     mainTitle: "Şimdi Yetkili Olmaya Başla",
     startBtn: "Başla",
@@ -129,6 +118,17 @@ const texts = {
     requestClosed: "Şu anda talep gönderimi kapalı.",
     alertSent: "Talebiniz gönderildi!",
     infoText: "GrowLeaf’te yetkili olacaksınız. Sizi deneme olarak alacağız. İlerleyen zamanlarda rolünüz yükselecektir, bu yüzden sadık olmanız önemlidir. Deneme olarak alındığınızda ticket bakacaksınız ilk başta, sonradan oyun içinde rol alacaksınız ve en sonda baş yetkili olacaksınız ve diğerlerini yöneteceksiniz."
+  },
+  en: {
+    mainTitle: "Start Becoming an Officer Now",
+    startBtn: "Start",
+    formTitle: "Officer Request",
+    submitBtn: "Submit",
+    closeBtn: "Close",
+    adminLogin: "Admin Login",
+    requestClosed: "Request submission is currently closed.",
+    alertSent: "Your request has been sent!",
+    infoText: "You will become an officer at GrowLeaf. We will take you as a trial. Your role will increase over time, so loyalty is important. As a trial, you will manage tickets at first, later you will get a role in-game, and eventually become head officer and manage others."
   },
   id: {
     mainTitle: "Mulai Jadi Officer Sekarang",
@@ -154,7 +154,7 @@ function setLanguage(lang){
 }
 
 langSelector.addEventListener('change', e=> setLanguage(e.target.value));
-setLanguage('en'); // Default language EN
+setLanguage('tr');
 
 // Refresh Requests
 function refreshList(){
@@ -176,7 +176,7 @@ closeForm.addEventListener('click',()=>formModal.style.display='none');
 
 submitRequest.addEventListener('click',()=>{
   const name = discordInput.value.trim();
-  if(name===''){ alert('Please enter your username!'); return; }
+  if(name===''){ alert('Lütfen kullanıcı adınızı girin!'); return; }
   requests.push({name});
   localStorage.setItem('growleafRequests',JSON.stringify(requests));
   discordInput.value='';
@@ -193,19 +193,19 @@ adminLogin.addEventListener('click',()=>{
     document.getElementById('mainCard').style.display='none';
     adminPanel.style.display='block';
     refreshList();
-    toggleRequests.textContent = requestOpen?'Close Requests':'Open Requests';
+    toggleRequests.textContent = requestOpen?'Talep Gönderimini Kapat':'Talep Gönderimini Aç';
   } else{
-    alert('Incorrect username or password!');
+    alert('Hatalı kullanıcı adı veya şifre!');
   }
 });
 
 toggleRequests.addEventListener('click',()=>{
   requestOpen = !requestOpen;
   localStorage.setItem('growleafOpen',JSON.stringify(requestOpen));
-  toggleRequests.textContent = requestOpen?'Close Requests':'Open Requests';
+  toggleRequests.textContent = requestOpen?'Talep Gönderimini Kapat':'Talep Gönderimini Aç';
 });
 
-// ESC to close modals
+// ESC ile kapatma
 document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){ formModal.style.display='none'; adminModal.style.display='none'; }
 });
@@ -214,57 +214,4 @@ adminModal.addEventListener('click',e=>{if(e.target===adminModal) adminModal.sty
 </script>
 </body>
 </html>
-
- <input type="text" id="discordName" placeholder="">
- <p id="reasonLabel"></p>
- <textarea id="reasonText" placeholder=""></textarea>
- <p class="infoText" id="infoTextExtra"></p>
- <button class="btn" id="discordBtn" onclick="openDiscord()"></button>
-<script>
- const translationsExtra = {
-  en: {
-   discordPlaceholder: "Username / Discord Name",
-   reasonLabel: "Why do you want to be an officer in our server?",
-   reasonPlaceholder: "Type your reason here...",
-   infoTextExtra: "When you become an officer in our server, you will start as a trial. If you remain loyal, your rank will increase and you will have the chance to rise above. When this happens, you will manage all officers.",
-   discordBtn: "Officer Discord Server"
-  },
-  tr: {
-   discordPlaceholder: "Kullanıcı Adı / Discord Adı",
-   reasonLabel: "Sunucumuzda yetkili olmak istemenizin nedeni nedir?",
-   reasonPlaceholder: "Nedeninizi buraya yazın...",
-   infoTextExtra: "Sunucumuzda yetkili olduğunuzda ilk olarak deneme olarak başlıyacaksınız. Eğer sunucuya sadık olursanız yetkiniz artacak ve bunun bir üstüne yükselme şansınız olacak. Bu olursa bütün yetkilileri yöneteceksiniz.",
-   discordBtn: "Yetkili Discord Sunucusu"
-  },
-  id: {
-   discordPlaceholder: "Username / Discord Name",
-   reasonLabel: "Mengapa Anda ingin menjadi officer di server kami?",
-   reasonPlaceholder: "Tulis alasan Anda di sini...",
-   infoTextExtra: "Saat Anda menjadi officer di server kami, Anda akan mulai sebagai percobaan. Jika Anda tetap setia, peringkat Anda akan meningkat dan Anda akan memiliki kesempatan untuk naik lebih tinggi. Ketika ini terjadi, Anda akan mengelola semua officer.",
-   discordBtn: "Server Discord Officer"
-  }
- };
-
- function updateExtraTexts(lang){
-  document.getElementById('discordName').placeholder = translationsExtra[lang].discordPlaceholder;
-  document.getElementById('reasonLabel').textContent = translationsExtra[lang].reasonLabel;
-  document.getElementById('reasonText').placeholder = translationsExtra[lang].reasonPlaceholder;
-  document.getElementById('infoTextExtra').textContent = translationsExtra[lang].infoTextExtra;
-  document.getElementById('discordBtn').textContent = translationsExtra[lang].discordBtn;
- }
-
- updateExtraTexts('en'); // default EN
-
- langSelector.addEventListener('change', e => {
-  const lang = e.target.value;
-  updateExtraTexts(lang);
- });
-
- function openDiscord(){
-  window.open('https://discord.gg/pZVZ9mBWEj','_blank');
-  formModal.style.display='none';
- }
-</script>
-
-
 
