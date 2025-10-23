@@ -6,67 +6,79 @@
 <title>GrowLeaf — Yetki Paneli</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg1:#ff9a3c; --bg2:#ff6a00; --accent:#fff; --card-bg: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.06);
-}
-*{margin:0; padding:0; box-sizing:border-box;}
-body{font-family:'Poppins',sans-serif; height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--bg1),var(--bg2)); color:var(--accent);}
-.brand{position:fixed; top:18px; left:20px; display:flex; gap:8px; align-items:center; font-weight:700; font-size:16px;}
-.card{background: var(--card-bg); padding:40px; border-radius:18px; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,0.18); max-width:480px; width:90%;}
-button{padding:14px 28px; font-size:16px; font-weight:700; border:none; border-radius:12px; cursor:pointer; transition:.2s; background:white; color:var(--bg2);}
+:root{--bg1:#ff9a3c;--bg2:#ff6a00;--accent:#fff;--card-bg: rgba(255,255,255,0.08);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:var(--accent);}
+.brand{position:fixed;top:18px;left:20px;display:flex;gap:8px;align-items:center;font-weight:700;font-size:16px;}
+.card{background:var(--card-bg);padding:40px;border-radius:18px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.18);max-width:480px;width:90%;}
+button{padding:14px 28px;font-size:16px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:.2s;background:white;color:var(--bg2);}
 button:hover{transform:translateY(-3px);}
-input{padding:10px 14px; border-radius:10px; border:none; width:100%; margin-bottom:12px;}
-.modal-backdrop{position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; align-items:center; justify-content:center;}
-.modal{background:white; color:#222; padding:20px; border-radius:12px; width:90%; max-width:400px;}
+input, textarea{padding:10px 14px;border-radius:10px;border:none;width:100%;margin-bottom:12px;}
+textarea{resize:none;height:80px;}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;}
+.modal{background:white;color:#222;padding:20px;border-radius:12px;width:90%;max-width:400px;}
 .modal h2{margin-bottom:12px;}
-.modal .btn{margin-top:8px; width:100%;}
-.admin-panel{margin-top:20px; text-align:left;}
+.modal .btn{margin-top:8px;width:100%;}
+.admin-panel{margin-top:20px;text-align:left;}
 .admin-panel h3{margin-bottom:8px;}
-.admin-panel ul{list-style:none; padding-left:0;}
-.toggle-btn{margin:10px 0; padding:6px 10px; border-radius:8px; background:#ff6a00; color:#fff; border:none; cursor:pointer;}
+.admin-panel ul{list-style:none;padding-left:0;}
+.toggle-btn{margin:10px 0;padding:6px 10px;border-radius:8px;background:#ff6a00;color:#fff;border:none;cursor:pointer;}
+#langSelector{position:fixed;top:18px;right:140px;padding:6px 10px;border-radius:8px;border:none;}
+#adminLoginBtn{position:fixed;top:18px;right:20px;padding:6px 10px;border-radius:8px;border:none;}
 </style>
 </head>
 <body>
-  <div class="brand">🍃 GrowLeaf</div>
+<div class="brand">🍃 GrowLeaf</div>
 
-  <div class="card" id="mainCard">
-    <h1>Şimdi Yetkili Olmaya Başla</h1>
-    <button id="startBtn">Başla</button>
-    <button id="adminLoginBtn" style="margin-top:12px;">Admin Girişi</button>
-  </div>
+<!-- Dil Seçimi -->
+<select id="langSelector">
+  <option value="tr">Türkçe</option>
+  <option value="en">English</option>
+  <option value="id">Indonesia</option>
+</select>
 
-  <!-- Form Modal -->
-  <div class="modal-backdrop" id="formModal">
-    <div class="modal">
-      <h2>Yetki Talebi</h2>
-      <input type="text" id="discordName" placeholder="Kullanıcı Adı / Discord Adı" required>
-      <button class="btn" id="submitRequest">Gönder</button>
-      <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
-    </div>
-  </div>
+<div class="card" id="mainCard">
+  <h1 id="mainTitle">Şimdi Yetkili Olmaya Başla</h1>
+  <button id="startBtn">Başla</button>
+</div>
 
-  <!-- Admin Login Modal -->
-  <div class="modal-backdrop" id="adminModal">
-    <div class="modal">
-      <h2>Admin Girişi</h2>
-      <input type="text" id="adminUser" placeholder="Kullanıcı Adı">
-      <input type="password" id="adminPass" placeholder="Şifre">
-      <button class="btn" id="adminLogin">Giriş</button>
-      <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
-    </div>
-  </div>
+<button id="adminLoginBtn">Admin Girişi</button>
 
-  <!-- Admin Panel -->
-  <div class="card" id="adminPanel" style="display:none;">
-    <h1>Admin Paneli</h1>
-    <button class="toggle-btn" id="toggleRequests">Talep Gönderimini Kapat</button>
-    <div class="admin-panel">
-      <h3>Talepler:</h3>
-      <ul id="requestList"></ul>
-    </div>
+<!-- Form Modal -->
+<div class="modal-backdrop" id="formModal">
+  <div class="modal">
+    <h2 id="formTitle">Yetki Talebi</h2>
+    <input type="text" id="discordName" placeholder="Kullanıcı Adı / Discord Adı">
+    <p id="reasonLabel">Neden GrowLeaf'te yetkili olmak istiyorsunuz?</p>
+    <textarea id="reasonText"></textarea>
+    <button class="btn" id="submitRequest">Onayla</button>
+    <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
   </div>
+</div>
+
+<!-- Admin Login Modal -->
+<div class="modal-backdrop" id="adminModal">
+  <div class="modal">
+    <h2>Admin Girişi</h2>
+    <input type="text" id="adminUser" placeholder="Kullanıcı Adı">
+    <input type="password" id="adminPass" placeholder="Şifre">
+    <button class="btn" id="adminLogin">Giriş</button>
+    <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div class="card" id="adminPanel" style="display:none;">
+  <h1>Admin Paneli</h1>
+  <button class="toggle-btn" id="toggleRequests">Talep Gönderimini Kapat</button>
+  <div class="admin-panel">
+    <h3>Talepler:</h3>
+    <ul id="requestList"></ul>
+  </div>
+</div>
 
 <script>
+// LocalStorage Data
 let requests = JSON.parse(localStorage.getItem('growleafRequests') || '[]');
 let requestOpen = JSON.parse(localStorage.getItem('growleafOpen') || 'true');
 
@@ -76,6 +88,7 @@ const formModal = document.getElementById('formModal');
 const closeForm = document.getElementById('closeForm');
 const submitRequest = document.getElementById('submitRequest');
 const discordInput = document.getElementById('discordName');
+const reasonInput = document.getElementById('reasonText');
 
 const adminLoginBtn = document.getElementById('adminLoginBtn');
 const adminModal = document.getElementById('adminModal');
@@ -88,21 +101,75 @@ const adminPanel = document.getElementById('adminPanel');
 const requestList = document.getElementById('requestList');
 const toggleRequests = document.getElementById('toggleRequests');
 
+const langSelector = document.getElementById('langSelector');
+const mainTitle = document.getElementById('mainTitle');
+const formTitle = document.getElementById('formTitle');
+const reasonLabel = document.getElementById('reasonLabel');
+const startButton = startBtn;
+
+// Language Texts
+const texts = {
+  tr: {
+    mainTitle: "Şimdi Yetkili Olmaya Başla",
+    startBtn: "Başla",
+    formTitle: "Yetki Talebi",
+    reasonLabel: "Neden GrowLeaf'te yetkili olmak istiyorsunuz?",
+    submitBtn: "Onayla",
+    closeBtn: "Kapat",
+    adminLogin: "Admin Girişi",
+    requestClosed: "Şu anda talep gönderimi kapalı.",
+    alertSent: "Talebiniz gönderildi!"
+  },
+  en: {
+    mainTitle: "Start Becoming an Officer Now",
+    startBtn: "Start",
+    formTitle: "Request Officer",
+    reasonLabel: "Why do you want to be an officer at GrowLeaf?",
+    submitBtn: "Submit",
+    closeBtn: "Close",
+    adminLogin: "Admin Login",
+    requestClosed: "Request submission is currently closed.",
+    alertSent: "Your request has been sent!"
+  },
+  id: {
+    mainTitle: "Mulai Jadi Officer Sekarang",
+    startBtn: "Mulai",
+    formTitle: "Permintaan Officer",
+    reasonLabel: "Mengapa kamu ingin menjadi officer di GrowLeaf?",
+    submitBtn: "Kirim",
+    closeBtn: "Tutup",
+    adminLogin: "Login Admin",
+    requestClosed: "Pengiriman permintaan sedang ditutup.",
+    alertSent: "Permintaanmu telah dikirim!"
+  }
+};
+
+function setLanguage(lang){
+  mainTitle.textContent = texts[lang].mainTitle;
+  startBtn.textContent = texts[lang].startBtn;
+  formTitle.textContent = texts[lang].formTitle;
+  reasonLabel.textContent = texts[lang].reasonLabel;
+  submitRequest.textContent = texts[lang].submitBtn;
+  closeForm.textContent = texts[lang].closeBtn;
+  adminLoginBtn.textContent = texts[lang].adminLogin;
+}
+
+langSelector.addEventListener('change', e=> setLanguage(e.target.value));
+setLanguage('tr');
+
+// Refresh Requests
 function refreshList(){
   requestList.innerHTML = '';
-  requests.forEach(name => {
+  requests.forEach(r=>{
     const li = document.createElement('li');
-    li.textContent = name;
+    li.textContent = `${r.name} — ${r.reason}`;
     requestList.appendChild(li);
   });
 }
 
-// Event Listeners
+// Events
 startBtn.addEventListener('click',()=>{
-  if(!requestOpen){
-    alert('Şu anda talep gönderimi kapalı.');
-    return;
-  }
+  if(!requestOpen){ alert(texts[langSelector.value].requestClosed); return; }
   formModal.style.display='flex';
 });
 
@@ -110,12 +177,13 @@ closeForm.addEventListener('click',()=>formModal.style.display='none');
 
 submitRequest.addEventListener('click',()=>{
   const name = discordInput.value.trim();
+  const reason = reasonInput.value.trim();
   if(name===''){ alert('Lütfen kullanıcı adınızı girin!'); return; }
-  requests.push(name);
+  requests.push({name, reason});
   localStorage.setItem('growleafRequests',JSON.stringify(requests));
-  discordInput.value='';
+  discordInput.value=''; reasonInput.value='';
   formModal.style.display='none';
-  alert('Talebiniz gönderildi!');
+  alert(texts[langSelector.value].alertSent);
 });
 
 adminLoginBtn.addEventListener('click',()=>adminModal.style.display='flex');
@@ -139,18 +207,12 @@ toggleRequests.addEventListener('click',()=>{
   toggleRequests.textContent = requestOpen?'Talep Gönderimini Kapat':'Talep Gönderimini Aç';
 });
 
-// ESC ile modalleri kapatma
+// ESC ile kapatma
 document.addEventListener('keydown',(e)=>{
-  if(e.key==='Escape'){
-    formModal.style.display='none';
-    adminModal.style.display='none';
-  }
+  if(e.key==='Escape'){ formModal.style.display='none'; adminModal.style.display='none'; }
 });
-
-// Modal backdrop tıklayınca kapatma
 formModal.addEventListener('click',e=>{if(e.target===formModal) formModal.style.display='none';});
 adminModal.addEventListener('click',e=>{if(e.target===adminModal) adminModal.style.display='none';});
 </script>
 </body>
 </html>
-
