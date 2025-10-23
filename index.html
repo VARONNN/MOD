@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GrowLeaf — Yetki Paneli</title>
+<title>GrowLeaf — Officer Panel</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#ff9a3c;--bg2:#ff6a00;--accent:#fff;--card-bg: rgba(255,255,255,0.08);}
@@ -25,54 +25,54 @@ textarea{resize:none;height:80px;}
 .toggle-btn{margin:10px 0;padding:6px 10px;border-radius:8px;background:#ff6a00;color:#fff;border:none;cursor:pointer;}
 #langSelector{position:fixed;top:18px;right:140px;padding:6px 10px;border-radius:8px;border:none;}
 #adminLoginBtn{position:fixed;top:18px;right:20px;padding:6px 10px;border-radius:8px;border:none;}
+.infoText{font-size:14px;color:#fff;text-align:left;margin-top:12px;}
 </style>
 </head>
 <body>
 <div class="brand">🍃 GrowLeaf</div>
 
-<!-- Dil Seçimi -->
+<!-- Language Selector -->
 <select id="langSelector">
+  <option value="en" selected>English</option>
   <option value="tr">Türkçe</option>
-  <option value="en">English</option>
   <option value="id">Indonesia</option>
 </select>
 
 <div class="card" id="mainCard">
-  <h1 id="mainTitle">Şimdi Yetkili Olmaya Başla</h1>
-  <button id="startBtn">Başla</button>
+  <h1 id="mainTitle">Start Becoming an Officer Now</h1>
+  <button id="startBtn">Start</button>
 </div>
 
-<button id="adminLoginBtn">Admin Girişi</button>
+<button id="adminLoginBtn">Admin Login</button>
 
 <!-- Form Modal -->
 <div class="modal-backdrop" id="formModal">
   <div class="modal">
-    <h2 id="formTitle">Yetki Talebi</h2>
-    <input type="text" id="discordName" placeholder="Kullanıcı Adı / Discord Adı">
-    <p id="reasonLabel">Neden GrowLeaf'te yetkili olmak istiyorsunuz?</p>
-    <textarea id="reasonText"></textarea>
-    <button class="btn" id="submitRequest">Onayla</button>
-    <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
+    <h2 id="formTitle">Officer Request</h2>
+    <input type="text" id="discordName" placeholder="Username / Discord Name">
+    <p class="infoText" id="infoText">You will become an officer at GrowLeaf. We will take you as a trial. Your role will increase over time, so loyalty is important. As a trial, you will manage tickets at first, later you will get a role in-game, and eventually become head officer and manage others.</p>
+    <button class="btn" id="submitRequest">Submit</button>
+    <button class="btn" id="closeForm" style="margin-top:6px;background:#ccc;color:#222;">Close</button>
   </div>
 </div>
 
 <!-- Admin Login Modal -->
 <div class="modal-backdrop" id="adminModal">
   <div class="modal">
-    <h2>Admin Girişi</h2>
-    <input type="text" id="adminUser" placeholder="Kullanıcı Adı">
-    <input type="password" id="adminPass" placeholder="Şifre">
-    <button class="btn" id="adminLogin">Giriş</button>
-    <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Kapat</button>
+    <h2>Admin Login</h2>
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button class="btn" id="adminLogin">Login</button>
+    <button class="btn" id="closeAdmin" style="margin-top:6px;background:#ccc;color:#222;">Close</button>
   </div>
 </div>
 
 <!-- Admin Panel -->
 <div class="card" id="adminPanel" style="display:none;">
-  <h1>Admin Paneli</h1>
-  <button class="toggle-btn" id="toggleRequests">Talep Gönderimini Kapat</button>
+  <h1>Admin Panel</h1>
+  <button class="toggle-btn" id="toggleRequests">Close Requests</button>
   <div class="admin-panel">
-    <h3>Talepler:</h3>
+    <h3>Requests:</h3>
     <ul id="requestList"></ul>
   </div>
 </div>
@@ -88,7 +88,6 @@ const formModal = document.getElementById('formModal');
 const closeForm = document.getElementById('closeForm');
 const submitRequest = document.getElementById('submitRequest');
 const discordInput = document.getElementById('discordName');
-const reasonInput = document.getElementById('reasonText');
 
 const adminLoginBtn = document.getElementById('adminLoginBtn');
 const adminModal = document.getElementById('adminModal');
@@ -104,43 +103,43 @@ const toggleRequests = document.getElementById('toggleRequests');
 const langSelector = document.getElementById('langSelector');
 const mainTitle = document.getElementById('mainTitle');
 const formTitle = document.getElementById('formTitle');
-const reasonLabel = document.getElementById('reasonLabel');
 const startButton = startBtn;
+const infoText = document.getElementById('infoText');
 
 // Language Texts
 const texts = {
-  tr: {
-    mainTitle: "Şimdi Yetkili Olmaya Başla",
-    startBtn: "Başla",
-    formTitle: "Yetki Talebi",
-    reasonLabel: "Neden GrowLeaf'te yetkili olmak istiyorsunuz?",
-    submitBtn: "Onayla",
-    closeBtn: "Kapat",
-    adminLogin: "Admin Girişi",
-    requestClosed: "Şu anda talep gönderimi kapalı.",
-    alertSent: "Talebiniz gönderildi!"
-  },
   en: {
     mainTitle: "Start Becoming an Officer Now",
     startBtn: "Start",
-    formTitle: "Request Officer",
-    reasonLabel: "Why do you want to be an officer at GrowLeaf?",
+    formTitle: "Officer Request",
     submitBtn: "Submit",
     closeBtn: "Close",
     adminLogin: "Admin Login",
     requestClosed: "Request submission is currently closed.",
-    alertSent: "Your request has been sent!"
+    alertSent: "Your request has been sent!",
+    infoText: "You will become an officer at GrowLeaf. We will take you as a trial. Your role will increase over time, so loyalty is important. As a trial, you will manage tickets at first, later you will get a role in-game, and eventually become head officer and manage others."
+  },
+  tr: {
+    mainTitle: "Şimdi Yetkili Olmaya Başla",
+    startBtn: "Başla",
+    formTitle: "Yetki Talebi",
+    submitBtn: "Onayla",
+    closeBtn: "Kapat",
+    adminLogin: "Admin Girişi",
+    requestClosed: "Şu anda talep gönderimi kapalı.",
+    alertSent: "Talebiniz gönderildi!",
+    infoText: "GrowLeaf’te yetkili olacaksınız. Sizi deneme olarak alacağız. İlerleyen zamanlarda rolünüz yükselecektir, bu yüzden sadık olmanız önemlidir. Deneme olarak alındığınızda ticket bakacaksınız ilk başta, sonradan oyun içinde rol alacaksınız ve en sonda baş yetkili olacaksınız ve diğerlerini yöneteceksiniz."
   },
   id: {
     mainTitle: "Mulai Jadi Officer Sekarang",
     startBtn: "Mulai",
     formTitle: "Permintaan Officer",
-    reasonLabel: "Mengapa kamu ingin menjadi officer di GrowLeaf?",
     submitBtn: "Kirim",
     closeBtn: "Tutup",
     adminLogin: "Login Admin",
     requestClosed: "Pengiriman permintaan sedang ditutup.",
-    alertSent: "Permintaanmu telah dikirim!"
+    alertSent: "Permintaanmu telah dikirim!",
+    infoText: "Anda akan menjadi officer di GrowLeaf. Kami akan mengambil Anda sebagai percobaan. Peran Anda akan meningkat seiring waktu, jadi kesetiaan penting. Sebagai percobaan, Anda akan menangani tiket pada awalnya, kemudian Anda akan mendapatkan peran di dalam game, dan akhirnya menjadi kepala officer dan mengelola orang lain."
   }
 };
 
@@ -148,21 +147,21 @@ function setLanguage(lang){
   mainTitle.textContent = texts[lang].mainTitle;
   startBtn.textContent = texts[lang].startBtn;
   formTitle.textContent = texts[lang].formTitle;
-  reasonLabel.textContent = texts[lang].reasonLabel;
   submitRequest.textContent = texts[lang].submitBtn;
   closeForm.textContent = texts[lang].closeBtn;
   adminLoginBtn.textContent = texts[lang].adminLogin;
+  infoText.textContent = texts[lang].infoText;
 }
 
 langSelector.addEventListener('change', e=> setLanguage(e.target.value));
-setLanguage('tr');
+setLanguage('en'); // Default language EN
 
 // Refresh Requests
 function refreshList(){
   requestList.innerHTML = '';
   requests.forEach(r=>{
     const li = document.createElement('li');
-    li.textContent = `${r.name} — ${r.reason}`;
+    li.textContent = r.name;
     requestList.appendChild(li);
   });
 }
@@ -177,11 +176,10 @@ closeForm.addEventListener('click',()=>formModal.style.display='none');
 
 submitRequest.addEventListener('click',()=>{
   const name = discordInput.value.trim();
-  const reason = reasonInput.value.trim();
-  if(name===''){ alert('Lütfen kullanıcı adınızı girin!'); return; }
-  requests.push({name, reason});
+  if(name===''){ alert('Please enter your username!'); return; }
+  requests.push({name});
   localStorage.setItem('growleafRequests',JSON.stringify(requests));
-  discordInput.value=''; reasonInput.value='';
+  discordInput.value='';
   formModal.style.display='none';
   alert(texts[langSelector.value].alertSent);
 });
@@ -195,19 +193,19 @@ adminLogin.addEventListener('click',()=>{
     document.getElementById('mainCard').style.display='none';
     adminPanel.style.display='block';
     refreshList();
-    toggleRequests.textContent = requestOpen?'Talep Gönderimini Kapat':'Talep Gönderimini Aç';
+    toggleRequests.textContent = requestOpen?'Close Requests':'Open Requests';
   } else{
-    alert('Hatalı kullanıcı adı veya şifre!');
+    alert('Incorrect username or password!');
   }
 });
 
 toggleRequests.addEventListener('click',()=>{
   requestOpen = !requestOpen;
   localStorage.setItem('growleafOpen',JSON.stringify(requestOpen));
-  toggleRequests.textContent = requestOpen?'Talep Gönderimini Kapat':'Talep Gönderimini Aç';
+  toggleRequests.textContent = requestOpen?'Close Requests':'Open Requests';
 });
 
-// ESC ile kapatma
+// ESC to close modals
 document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){ formModal.style.display='none'; adminModal.style.display='none'; }
 });
@@ -216,3 +214,4 @@ adminModal.addEventListener('click',e=>{if(e.target===adminModal) adminModal.sty
 </script>
 </body>
 </html>
+
