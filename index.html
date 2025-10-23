@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GrowLeaf — Yetki Seç</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1: #ff9a3c;
+      --bg-2: #ff6a00;
+      --card: rgba(255,255,255,0.08);
+      --glass: rgba(255,255,255,0.06);
+      --accent: rgba(255,255,255,0.95);
+      --btn-shadow: 0 10px 30px rgba(255,105,0,0.18);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg,var(--bg-1),var(--bg-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* header top-left */
+    .brand{
+      position:fixed;
+      left:20px;
+      top:18px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      padding:8px 14px;
+      border-radius:12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      backdrop-filter: blur(6px);
+      cursor:default;
+    }
+    .brand .leaf{
+      font-size:20px;
+      transform:translateY(-1px);
+    }
+    .brand .title{
+      font-weight:700;
+      letter-spacing:0.4px;
+      font-size:16px;
+      color: #fff;
+      text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    }
+
+    /* center card */
+    .card{
+      width:min(720px,92%);
+      max-width:900px;
+      padding:40px;
+      border-radius:18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:22px;
+      text-align:center;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .card h1{
+      margin:0;
+      font-size:24px;
+      font-weight:700;
+      color:#fff;
+    }
+    .card p{
+      margin:0;
+      color: rgba(255,255,255,0.9);
+      opacity:0.95;
+      max-width:640px;
+      line-height:1.45;
+    }
+
+    /* main button */
+    .cta{
+      margin-top:8px;
+      appearance:none;
+      border:0;
+      padding:18px 34px;
+      font-size:16px;
+      font-weight:700;
+      border-radius:12px;
+      background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+      color: var(--bg-2);
+      box-shadow: var(--btn-shadow);
+      cursor:pointer;
+      transition: transform .14s cubic-bezier(.2,.9,.3,1), box-shadow .14s;
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+    }
+    .cta:active{ transform: translateY(2px) scale(.997); }
+    .cta:hover{ transform: translateY(-3px); box-shadow: 0 18px 36px rgba(255,105,0,0.22); }
+
+    .icon-rocket{
+      display:inline-block;
+      transform:translateY(-1px);
+      font-size:18px;
+    }
+
+    /* small footer note */
+    .note{
+      margin-top:6px;
+      font-size:13px;
+      color: rgba(255,255,255,0.85);
+      opacity:0.9;
+    }
+
+    /* simple modal */
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(0,0,0,0.45);
+      z-index:40;
+    }
+    .modal{
+      width:min(420px,92%);
+      background: white;
+      color:#222;
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      text-align:left;
+    }
+    .modal h3{ margin:0 0 8px 0; font-size:18px; }
+    .modal p{ margin:0 0 16px 0; color:#444; line-height:1.45; }
+    .modal .row{ display:flex; gap:8px; justify-content:flex-end; }
+    .btn-secondary{
+      background:transparent;
+      border:1px solid #e6e6e6;
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg,var(--bg-2),#ff8a2b);
+      color:white;
+      border:0;
+      padding:8px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    @media (max-width:520px){
+      .card{ padding:28px; border-radius:14px; }
+      .brand{ left:12px; top:12px; padding:7px 10px; border-radius:10px; }
+      .card h1{ font-size:20px; }
+      .cta{ padding:14px 20px; font-size:15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="brand" aria-hidden="false">
+    <div class="leaf" role="img" aria-label="leaf">🍃</div>
+    <div class="title">GrowLeaf</div>
+  </div>
+
+  <main class="card" role="main" aria-labelledby="main-title">
+    <h1 id="main-title">Şimdi Yetkili Olmaya Başla</h1>
+    <p>GrowLeaf sunucuna kolayca yetki talepleri oluştur. Aşağıdaki butona basıp süreci başlat — hızlı, güvenli ve göz alıcı.</p>
+
+    <button class="cta" id="startBtn" aria-haspopup="dialog">
+      <span class="icon-rocket">⚡</span>
+      Şimdi Yetkili Olmaya Başla
+    </button>
+
+    <div class="note">Butona bastığında yetkili talep penceresi açılacaktır.</div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h3 id="modal-title">Yetki Talebi Başlat</h3>
+      <p>Yetki talebinizi başlatmak için "Onayla"ya basın. Bu demo sayfa — gerçek sunucu entegrasyonu için Discord webhook veya backend eklenmesi gerekir.</p>
+      <div class="row">
+        <button class="btn-secondary" id="cancelBtn">İptal</button>
+        <button class="btn-primary" id="confirmBtn">Onayla</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const modal = document.getElementById('modal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    startBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    confirmBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      // demo aksiyon: toast/alert
+      // İstersen burayı Discord yönlendirmesi veya API çağrısına bağlayabilirim.
+      const txt = 'Yetki talebiniz alındı — yöneticilere bildirildi!';
+      // küçük şık toast yerine alert (basit ve her yerde çalışır)
+      alert(txt);
+    });
+
+    // ESC ile kapatma
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') modal.style.display = 'none';
+    });
+
+    // modali arkaplana tıklayınca kapat
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
